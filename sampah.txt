@@ -1,0 +1,97 @@
+<div id="reservation" class="container container-section">
+    <div class="reservation">
+        <h2>Make a Reservation</h2>
+        <form id="reservation-form" class="reservation-form" action="reservation.php" method="POST">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="phone_number">Active Phone Number</label>
+                <input type="text" class="form-control" id="phone_number" name="phone_number" required>
+            </div>
+            <div class="form-group">
+                <label for="service_type">Type of Service</label>
+                <select class="form-control" id="service_type" name="service_type" required>
+                    <option value="Haircuts and Styling">Haircuts and Styling</option>
+                    <option value="Manicure and Pedicure">Manicure and Pedicure</option>
+                    <option value="Facial Treatments">Facial Treatments</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="reservation_date">Date</label>
+                <input type="date" class="form-control" id="reservation_date" name="reservation_date" required>
+            </div>
+            <div class="form-group">
+                <label for="reservation_time">Time</label>
+                <input type="time" class="form-control" id="reservation_time" name="reservation_time" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit Reservation</button>
+        </form>
+    </div>
+</div>
+
+<div id="reviews" class="container container-section">
+    <div class="reviews">
+        <h2>Customer Reviews</h2>
+        <form id="review-form" class="review-form" action="review.php" method="POST">
+            <div class="form-group">
+                <label for="customer_name">Name</label>
+                <input type="text" class="form-control" id="customer_name" name="customer_name" required>
+            </div>
+            <div class="form-group">
+                <label for="star_rating">Rating</label>
+                <select class="form-control" id="star_rating" name="star_rating" required>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="comment">Comment</label>
+                <textarea class="form-control" id="comment" name="comment" rows="3" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit Review</button>
+        </form>
+        <div id="review-list" class="review-list"></div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Load reviews from the database
+        fetch('get_reviews.php')
+            .then(response => response.json())
+            .then(data => {
+                const reviewList = document.getElementById('review-list');
+                data.forEach(review => {
+                    const reviewItem = document.createElement('div');
+                    reviewItem.classList.add('review-item');
+                    reviewItem.innerHTML = `
+                            <h5>${review.customer_name} - ${review.star_rating} Stars</h5>
+                            <p>${review.comment}</p>
+                        `;
+                    reviewList.appendChild(reviewItem);
+                });
+            });
+
+        // Load reservations from the database (for demonstration purposes)
+        fetch('get_reservations.php')
+            .then(response => response.json())
+            .then(data => {
+                const reservationList = document.getElementById('reservation-list');
+                data.forEach(reservation => {
+                    const reservationItem = document.createElement('div');
+                    reservationItem.classList.add('reservation-item');
+                    reservationItem.innerHTML = `
+                            <h5>${reservation.name} - ${reservation.service_type}</h5>
+                            <p>${reservation.reservation_date} at ${reservation.reservation_time}</p>
+                            <p>Phone: ${reservation.phone_number}</p>
+                        `;
+                    reservationList.appendChild(reservationItem);
+                });
+            });
+    });
+</script>
