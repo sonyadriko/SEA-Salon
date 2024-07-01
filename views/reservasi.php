@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../assets/style.css">
 </head>
 
 <body>
@@ -25,23 +25,25 @@
                         <thead>
                             <tr>
                                 <th>#</th>
+                                <th>Branch</th>
+                                <th>Service</th>
                                 <th>Date</th>
                                 <th>Time</th>
-                                <th>Service</th>
                                 <!-- <th>Action</th> -->
                             </tr>
                         </thead>
                         <tbody>
                             <?php 
-                            include 'database.php';
+                            include '../config/database.php';
                             $no = 1;
                             $get_data = mysqli_query($conn, "SELECT *
                             FROM reservations
-                            INNER JOIN service ON reservations.service_type = service.id_service WHERE reservations.users_id = '$_SESSION[user_id]'");
+                            INNER JOIN service ON reservations.service_type = service.id_service INNER JOIN branch ON reservations.branch_id = branch.id_branch WHERE reservations.users_id = '$_SESSION[user_id]'");
 
                             while($display = mysqli_fetch_array($get_data)) {
                                 $id = $display['id_reservation'];
-                                $name = $display['users_id'];                                            
+                                $name = $display['users_id'];            
+                                $branch = $display['branch_name'];                                
                                 $service_type = $display['service_type'];
                                 $service_name = $display['service_name'];
                                 $date = $display['reservation_date'];
@@ -49,9 +51,10 @@
                             ?>
                             <tr>
                                 <td><?php echo $no; ?></td>
+                                <td><?php echo $branch; ?></td>
+                                <td><?php echo $service_name; ?></td>
                                 <td><?php echo $date; ?></td>
                                 <td><?php echo $time; ?></td>
-                                <td><?php echo $service_name; ?></td>
                                 <!-- <td>
                                     <div class="action-buttons">
                                         <a href='ubah_kuesioner.php?GetID=<?php echo $id; ?>'
@@ -77,39 +80,43 @@
             <div class="card">
                 <div class="card-body">
                     <div class="card-title">Reservasi</div>
-                    <table id="reservationTable" class="table table-striped table-bordered" style="width:100%">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Name</th>
-                                <th>Date</th>
-                                <th>Time</th>
-                                <th>Service</th>
-                                <!-- <th>Action</th> -->
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php 
-                            include 'database.php';
+                    <div class="table-responsive">
+                        <table id="reservationTable" class="table table-striped table-bordered" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Branch</th>
+                                    <th>Service</th>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                    <!-- <th>Action</th> -->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php 
+                            include '../config/database.php';
                             $no = 1;
                             $get_data = mysqli_query($conn, "SELECT *
                             FROM reservations
-                            INNER JOIN service ON reservations.service_type = service.id_service INNER JOIN users ON reservations.users_id = users.id_users");
+                            INNER JOIN service ON reservations.service_type = service.id_service INNER JOIN users ON reservations.users_id = users.id_users JOIN branch ON reservations.branch_id = branch.id_branch");
                             while($display = mysqli_fetch_array($get_data)) {
                                 $id = $display['id_reservation'];
-                                $name = $display['nama'];                                            
+                                $name = $display['nama'];                         
+                                $branch_name = $display['branch_name'];                   
                                 $service_type = $display['service_type'];
                                 $service_name = $display['service_name'];
                                 $date = $display['reservation_date'];
                                 $time = $display['reservation_time'];
                             ?>
-                            <tr>
-                                <td><?php echo $no; ?></td>
-                                <td><?php echo $name; ?></td>
-                                <td><?php echo $date; ?></td>
-                                <td><?php echo $time; ?></td>
-                                <td><?php echo $service_name; ?></td>
-                                <!-- <td>
+                                <tr>
+                                    <td><?php echo $no; ?></td>
+                                    <td><?php echo $name; ?></td>
+                                    <td><?php echo $branch_name; ?></td>
+                                    <td><?php echo $service_name; ?></td>
+                                    <td><?php echo $date; ?></td>
+                                    <td><?php echo $time; ?></td>
+                                    <!-- <td>
                                     <div class="action-buttons">
                                         <a href='ubah_kuesioner.php?GetID=<?php echo $id; ?>'
                                             class="btn btn-primary btn-user">Ubah</a>
@@ -117,13 +124,14 @@
                                             data-id="<?php echo $id; ?>">Hapus</button>
                                     </div>
                                 </td> -->
-                            </tr>
-                            <?php
+                                </tr>
+                                <?php
                                 $no++;
                             }
                             ?>
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -135,7 +143,7 @@
     <script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap4.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="scripts.js"></script>
+    <script src="../assets/scripts.js"></script>
 
     <script>
     $(document).ready(function() {

@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'database.php';
+include '../config/database.php';
 
 $user_id = $_SESSION['user_id'];
 $reservation_id = $_POST['reservation'];
@@ -11,7 +11,7 @@ $comment = $_POST['comment'];
 $insert_review = mysqli_query($conn, "INSERT INTO reviews (users_id, reservation_id, star_rating, comment) VALUES ($user_id, $reservation_id, $rating, '$comment')");
 
 if ($insert_review) {
-    header('Location: review2.php');
+    header('Location: review.php');
     exit();
 } else {
     echo "Gagal menyimpan review: " . mysqli_error($conn);

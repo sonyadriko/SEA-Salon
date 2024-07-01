@@ -15,14 +15,15 @@ if (!isset($_SESSION['user_id'])) {
     <a href="#"><i class="fas fa-user-circle"></i> <?php echo $_SESSION['nama'] ?></a>
     <?php if($_SESSION['role'] == 'admin'){ ?>
     <a href="profile.php"><i class="fas fa-user"></i> Profile</a>
-    <a href="service.php"><i class="fas fa-user"></i> Service</a>
+    <a href="branch.php"><i class="fas fa-building"></i> Branch</a>
+    <a href="service.php"><i class="fas fa-tools"></i> Service</a>
     <a href="reservasi.php"><i class="fas fa-calendar-alt"></i> Reservasi</a>
-    <a href="review2.php"><i class="fas fa-star"></i> Review</a>
+    <a href="review.php"><i class="fas fa-star"></i> Review</a>
     <a href="logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
     <?php }else if($_SESSION['role'] == 'customer'){ ?>
     <a href="profile.php"><i class="fas fa-user"></i> Profile</a>
     <a href="reservasi.php"><i class="fas fa-calendar-alt"></i> Reservasi</a>
-    <a href="review2.php"><i class="fas fa-star"></i> Review</a>
+    <a href="review.php"><i class="fas fa-star"></i> Review</a>
     <a href="logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
     <?php } ?>
 </div>

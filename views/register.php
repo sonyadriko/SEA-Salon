@@ -1,5 +1,5 @@
 <?php
-include 'database.php';
+include '../config/database.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nama = $_POST['nama'];
@@ -30,59 +30,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Yuvela Salon - Register</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #f8f9fa;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        margin: 0;
-    }
-
-    .register-container {
-        background-color: #fff;
-        padding: 30px;
-        border-radius: 8px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        max-width: 400px;
-        width: 100%;
-    }
-
-    .register-container h2 {
-        margin-bottom: 20px;
-        text-align: center;
-        color: #333;
-    }
-
-    .form-control:focus {
-        box-shadow: none;
-    }
-
-    .btn-primary {
-        width: 100%;
-        background-color: #007bff;
-        border-color: #007bff;
-    }
-
-    .btn-primary:hover {
-        background-color: #0056b3;
-        border-color: #004085;
-    }
-
-    .alert {
-        margin-bottom: 20px;
-    }
-
-    .text-center {
-        margin-top: 20px;
-    }
-    </style>
+    <link rel="stylesheet" href="../assets/stylelogin.css">
 </head>
 
 <body>
-    <div class="register-container">
+    <div class="container">
         <h2>Create an Account</h2>
         <?php if (isset($error_message)) { ?>
         <div class="alert alert-danger"><?php echo $error_message; ?></div>

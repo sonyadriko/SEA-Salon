@@ -6,12 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="stylelogin.css">
+    <link rel="stylesheet" href="../assets/stylelogin.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
-    <div class="login-container">
+    <div class="container">
         <h2>Login</h2>
         <form id="loginForm" method="POST">
             <div class="form-group">

@@ -1,5 +1,5 @@
 <?php
-include 'database.php';
+include '../config/database.php';
 
 // Cek apakah parameter GetID ada dan valid
 if (isset($_GET['GetID']) && is_numeric($_GET['GetID'])) {
@@ -48,7 +48,7 @@ mysqli_close($conn);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ubah Service - Yuvela Salon</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../assets/style.css">
 </head>
 
 <body>

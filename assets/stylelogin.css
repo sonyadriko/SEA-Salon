@@ -10,7 +10,7 @@ body {
     box-sizing: border-box;
 }
 
-.login-container {
+.container {
     background-color: #fff;
     padding: 30px;
     border-radius: 8px;
@@ -19,9 +19,10 @@ body {
     width: 100%;
 }
 
-.login-container h2 {
+.container h2 {
     margin-bottom: 20px;
     text-align: center;
+    color: #333;
 }
 
 .form-control:focus {
@@ -30,6 +31,13 @@ body {
 
 .btn-primary {
     width: 100%;
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #004085;
 }
 
 .alert {
@@ -45,11 +53,19 @@ body {
         padding: 10px;
     }
 
-    .login-container {
+    .container {
         padding: 20px;
     }
 
-    .login-container h2 {
+    .container h2 {
         font-size: 1.5em;
+    }
+
+    .btn-primary {
+        font-size: 0.9em;
+    }
+
+    .form-control {
+        font-size: 0.9em;
     }
 }

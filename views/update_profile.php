@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'database.php';
+include '../config/database.php';
 
 // Pastikan user telah login
 if (!isset($_SESSION['user_id'])) {

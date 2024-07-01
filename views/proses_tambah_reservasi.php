@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'database.php';
+include '../config/database.php';
 
 // Pastikan user telah login
 if (!isset($_SESSION['user_id'])) {
@@ -11,6 +11,7 @@ if (!isset($_SESSION['user_id'])) {
 // Ambil data dari form
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $service = $_POST['service'];
+    $branch = $_POST['branch'];
     $date = $_POST['date'];
     $time = $_POST['time'];
     $user_id = $_SESSION['user_id'];
@@ -19,8 +20,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Misalnya, validasi tanggal dan waktu, atau manipulasi format
 
     // Simpan reservasi ke dalam database
-    $stmt = $conn->prepare("INSERT INTO reservations (users_id, service_type, reservation_date, reservation_time) VALUES (?, ?, ?, ?)");
-    $stmt->bind_param("iiss", $user_id, $service, $date, $time);
+    $stmt = $conn->prepare("INSERT INTO reservations (users_id, branch_id, service_type, reservation_date, reservation_time) VALUES (?, ?, ?, ?, ?)");
+    $stmt->bind_param("iiiss", $user_id, $branch, $service, $date, $time);
 
     if ($stmt->execute()) {
         // Redirect ke halaman dengan pesan sukses atau tampilkan pesan sukses di halaman ini
