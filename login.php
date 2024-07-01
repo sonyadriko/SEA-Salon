@@ -13,9 +13,6 @@
 <body>
     <div class="login-container">
         <h2>Login</h2>
-        <?php if (isset($error_message)) { ?>
-        <div class="alert alert-danger"><?php echo $error_message; ?></div>
-        <?php } ?>
         <form id="loginForm" method="POST">
             <div class="form-group">
                 <label for="email">Email</label>

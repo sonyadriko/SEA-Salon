@@ -1,59 +1,39 @@
 <?php
-include '../config/database.php';
 session_start();
+include 'database.php';
 
 header('Content-Type: application/json');
 
-$response = array('success' => false, 'message' => 'Terjadi kesalahan saat melakukan login.');
+$response = array('success' => false, 'message' => 'Invalid request');
 
-try {
-    // Pastikan metode request adalah POST
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        // Pastikan email dan password dikirimkan
-        if (isset($_POST['email']) && isset($_POST['password'])) {
-            $email = $_POST['email'];
-            $password = $_POST['password'];
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $email = $_POST['email'];
+    $password = $_POST['password'];
 
-            // Hash the received password to match the hashed password stored in the database
-            // $hashed_password = password_hash($password, PASSWORD_DEFAULT); // No need to hash here
+    $stmt = $conn->prepare("SELECT id_users, password FROM users WHERE email = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $stmt->store_result();
+    if ($stmt->num_rows > 0) {
+        $stmt->bind_result($id, $hashed_password);
+        $stmt->fetch();
 
-            // Query to retrieve user data
-            $stmt = $conn->prepare("SELECT * FROM users WHERE email = ?");
-            $stmt->bind_param("s", $email);
-            $stmt->execute();
-            $result = $stmt->get_result();
-
-            // Check if a user with this email exists
-            if ($result->num_rows == 1) {
-                $row = $result->fetch_assoc();
-
-                // Verify password using password_verify
-                if (password_verify($password, $row['password'])) {
-                    // Set session variables
-                    $_SESSION['id_users'] = $row['id_users'];
-                    $_SESSION['nama'] = $row['nama'];
-                    $_SESSION['email'] = $row['email'];
-                    $_SESSION['role'] = $row['role'];
-
-                    $response['success'] = true;
-                    $response['message'] = 'Login berhasil';
-                    $response['redirect'] = 'dashboard.php'; // Set the redirect URL after successful login
-                } else {
-                    $response['message'] = 'Email atau Password salah';
-                }
-            } else {
-                $response['message'] = 'Email atau Password salah';
-            }
-
-            $stmt->close();
+        if ($is_password_valid) {
+            $_SESSION['user_id'] = $id;
+            $response['success'] = true;
+            $response['message'] = 'Login successful';
         } else {
-            $response['message'] = 'Email dan Password diperlukan';
+            $response['message'] = 'Invalid email or password.';
         }
+    } else {
+        $response['message'] = 'Invalid email or password.';
     }
-} catch (Exception $e) {
-    // Handle any unexpected exceptions
-    $response['message'] = 'Terjadi kesalahan saat melakukan login: ' . $e->getMessage();
+    $stmt->close();
+} else {
+    $response['message'] = 'Request method not supported.';
 }
+
+$conn->close();
 
 echo json_encode($response);
 ?>
