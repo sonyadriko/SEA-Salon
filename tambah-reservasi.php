@@ -24,10 +24,19 @@
                             <label for="service">Pilih Layanan</label>
                             <select class="form-control" id="service" name="service" required>
                                 <option value="">Pilih Layanan</option>
-                                <option value="Haircuts and Styling">Haircuts and Styling</option>
-                                <option value="Manicure and Pedicure">Manicure and Pedicure</option>
-                                <option value="Facial Treatments">Facial Treatments</option>
-                                <!-- Tambahkan opsi layanan lain sesuai kebutuhan -->
+                                <?php
+                                include 'database.php';
+
+                                // Ambil data layanan dari database
+                                $query = "SELECT * FROM service";
+                                $result = mysqli_query($conn, $query);
+
+                                while ($row = mysqli_fetch_array($result)) {
+                                    $service_name = $row['service_name'];
+                                    $id_service = $row['id_service'];
+                                    echo "<option value='$id_service'>$service_name</option>";
+                                }
+                                ?>
                             </select>
                         </div>
                         <div class="form-group">
